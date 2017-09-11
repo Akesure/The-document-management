@@ -32,7 +32,7 @@ var constantize = (obj) => {
 };
 ```
 
-##属性的简洁表示
+## 属性的简洁表示
 ------------------------
 
 对象，函数都可以简写
@@ -80,7 +80,7 @@ module.exports = {
 ```
 
 
-##Object.is()
+## Object.is()
 ------------------------
 
 ```
@@ -91,7 +91,7 @@ Object.is(+0, -0) // false
 Object.is(NaN, NaN) // true
 ```
 
-##Object.assign()
+## Object.assign()
 ------------------------
 
 用于对象的合并，如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性。
@@ -117,7 +117,7 @@ obj1.a.b = 2;
 obj2.a.b // 2
 ```
 
-###常见用途：
+### 常见用途：
 （1）为对象添加属性
 
 ```
@@ -191,33 +191,34 @@ function processContent(options) {
 
 
 
-##属性的遍历
+## 属性的遍历
 ------------------------
 ES6一共有5种方法可以遍历对象的属性。
 
-###（1）for...in
+### （1）for...in
 
 for...in循环遍历对象自身的和继承的可枚举属性（不含Symbol属性）。
 
-###（2）Object.keys(obj)
+### （2）Object.keys(obj)
 
 Object.keys返回一个数组，包括对象自身的（不含继承的）所有可枚举属性（不含Symbol属性）。
 
-###（3）Object.getOwnPropertyNames(obj)
+### （3）Object.getOwnPropertyNames(obj)
 
 Object.getOwnPropertyNames返回一个数组，包含对象自身的所有属性（不含Symbol属性，但是包括不可枚举属性）。
 
-###（4）Object.getOwnPropertySymbols(obj)
+### （4）Object.getOwnPropertySymbols(obj)
 
 Object.getOwnPropertySymbols返回一个数组，包含对象自身的所有Symbol属性。
 
-###（5）Reflect.ownKeys(obj)
+### （5）Reflect.ownKeys(obj)
 
 Reflect.ownKeys返回一个数组，包含对象自身的所有属性，不管是属性名是Symbol或字符串，也不管是否可枚举。
 
 
 
-##Object.keys()，Object.values()，Object.entries()
+## Object.keys()，Object.values()，Object.entries()
+------------------------
 ES5 引入了Object.keys方法，返回一个数组，成员是参数对象自身的（不含继承的）所有可遍历（enumerable）属性的键名。
 ```
 var obj = { foo: 'bar', baz: 42 };
@@ -231,23 +232,23 @@ Object.values(obj)
 // ["bar", 42]
 ```
 
-##对象的扩展运算符
+## 对象的扩展运算符
 ------------------------
-###（1）解构赋值
+### （1）解构赋值
 ```
 let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
 x // 1
 y // 2
 z // { a: 3, b: 4 }
 ```
-###（2）扩展运算符
+### （2）扩展运算符
 ```
 let z = { a: 3, b: 4 };
 let n = { ...z };
 n // { a: 3, b: 4 }
 ```
 
-##Null 传导运算符
+## Null 传导运算符
 ------------------------
 编程实务中，如果读取对象内部的某个属性，往往需要判断一下该对象是否存在。比如，要读取message.body.user.firstName，安全的写法是写成下面这样。
 ```
