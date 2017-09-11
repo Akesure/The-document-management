@@ -172,6 +172,8 @@ console.log(copyObj.name.lastName); // 湖水的小浅湾
 请看下面：
 
 **下面这一招可谓是“一招鲜，吃遍天”**
+
+
 1.JSON.parse(JSON.stringify(XXXX))
 
 ```
