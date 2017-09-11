@@ -27,7 +27,7 @@
 
 ### 深拷贝数组（只拷贝第一级数组元素）　
 
-- 1.直接遍历
+1.直接遍历
 ```
 var array = [1, 2, 3, 4];
 function copy (array) {
@@ -45,7 +45,7 @@ console.log(copyArray); // [100, 2, 3, 4]
 
 该方法不做解释（逃...）
 
-- 2. slice()
+2. slice()
 ```
 var array = [1, 2, 3, 4];
 var copyArray = array.slice();
@@ -59,7 +59,7 @@ slice() 方法返回一个从已有的数组中截取一部分元素片段组成
 
 当slice()不带任何参数的时候，默认返回一个长度和原数组相同的新数组
 
-- 3. concat()
+3. concat()
 ```
 var array = [1, 2, 3, 4];
 var copyArray = array.concat();
@@ -91,7 +91,7 @@ console.log(copyArray); // [{number: 100}, { number: 2 }, { number: 3 }]
 ## 深拷贝对象
 
 
-### 1.直接遍历
+1.直接遍历
 ```
 var obj = {
   name: '彭湖湾',
@@ -113,7 +113,7 @@ console.log(copyObj); // {name: "我才不是彭湖湾呢！ 哼 (。・`ω´・
 ```
 该方法不做解释（逃...）
 
-### 2.ES6的Object.assign
+2.ES6的Object.assign
 ```
 var obj = {
   name: '彭湖湾',
@@ -129,7 +129,7 @@ console.log(copyObj);  // {name: "我才不叫彭湖湾呢！ 哼  (。・`ω´�
 
 **用法： Object.assign(target, source1, source2);**  所以 copyObj = Object.assign({}, obj);  这段代码将会把obj中的一级属性都拷贝到 ｛｝中，然后将其返回赋给copyObj
 
-### 3.ES6扩展运算符：
+3.ES6扩展运算符：
 ```
 var obj = {
     name: '彭湖湾',
@@ -165,8 +165,9 @@ console.log(copyObj.name.lastName); // 湖水的小浅湾
 
 有没有更强大一些的解决方案呢？使得我们能够
 
-### 1.不仅拷贝第一层级，还能够拷贝数组或对象所有层级的各项值
-### 2. 不是单独针对数组或对象，而是能够通用于数组，对象和其他复杂的JSON形式的对象
+1.不仅拷贝第一层级，还能够拷贝数组或对象所有层级的各项值
+
+2. 不是单独针对数组或对象，而是能够通用于数组，对象和其他复杂的JSON形式的对象
 
 请看下面：
 
