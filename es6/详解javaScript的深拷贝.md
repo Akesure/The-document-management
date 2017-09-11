@@ -91,7 +91,7 @@ console.log(copyArray); // [{number: 100}, { number: 2 }, { number: 3 }]
 ## 深拷贝对象
 
 
-- 1.直接遍历
+### 1.直接遍历
 ```
 var obj = {
   name: '彭湖湾',
@@ -113,7 +113,7 @@ console.log(copyObj); // {name: "我才不是彭湖湾呢！ 哼 (。・`ω´・
 ```
 该方法不做解释（逃...）
 
-- 2.ES6的Object.assign
+### 2.ES6的Object.assign
 ```
 var obj = {
   name: '彭湖湾',
@@ -129,7 +129,7 @@ console.log(copyObj);  // {name: "我才不叫彭湖湾呢！ 哼  (。・`ω´�
 
 **用法： Object.assign(target, source1, source2);**  所以 copyObj = Object.assign({}, obj);  这段代码将会把obj中的一级属性都拷贝到 ｛｝中，然后将其返回赋给copyObj
 
-- 3.ES6扩展运算符：
+### 3.ES6扩展运算符：
 ```
 var obj = {
     name: '彭湖湾',
@@ -165,8 +165,8 @@ console.log(copyObj.name.lastName); // 湖水的小浅湾
 
 有没有更强大一些的解决方案呢？使得我们能够
 
-- 1.不仅拷贝第一层级，还能够拷贝数组或对象所有层级的各项值
-- 2. 不是单独针对数组或对象，而是能够通用于数组，对象和其他复杂的JSON形式的对象
+### 1.不仅拷贝第一层级，还能够拷贝数组或对象所有层级的各项值
+### 2. 不是单独针对数组或对象，而是能够通用于数组，对象和其他复杂的JSON形式的对象
 
 请看下面：
 
