@@ -230,6 +230,8 @@ console.log(copyArray); // [{number: 100}, { number: 2 }, { number: 3 }]
 通过immutable引入的一套API，实现：
 
 **1.在改变新的数组（对象）的时候，不改变原数组（对象）**
+
+
 **2.在大量深拷贝操作中显著地减少性能消耗**
 
 先睹为快：
