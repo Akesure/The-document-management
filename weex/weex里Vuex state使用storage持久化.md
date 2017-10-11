@@ -38,9 +38,10 @@ storage.getItem(STORAGE_KEY, event => {
       state.activeTabIndex = data.activeTabIndex;
   }
 })
-```　　
+```
 
 关键来了，如何存储？Vuex提供了插件机制，我们可以通过插件订阅state的每一次更改，在更改的时候保存我们感兴趣的就OK了
+
 ```
 // 存储plugin，存储感兴趣的数据，store里数据太多，没必要全持久化
 const storagePlugin = store => {
@@ -53,6 +54,7 @@ const storagePlugin = store => {
 ```
 
 最后，创建Vuex，大功告成
+
 ```
 const store = new Vuex.Store({
   actions,
