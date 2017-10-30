@@ -90,7 +90,7 @@ z = r*cos( theta );
 y = r*sin( theta ) * sin( phi );
 ```
 
-![img](,,/images/three3D/three_position.png)
+![img](../images/three3D/three_position.png)
 
 ## 全景虚拟漫游实现
 
