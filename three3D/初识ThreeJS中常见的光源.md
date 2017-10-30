@@ -187,3 +187,5 @@ intensity — 光的强度，默认值为1.
 ![img](../images/three3D/shoes_15.png)
 
 图15 点光源，聚光灯，平行光之间的效果（坐标均为(3,3,3)）
+
+[github](https://wufenfen.github.io/threeJS_Demo/shoe.html)
