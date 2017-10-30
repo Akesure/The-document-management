@@ -58,3 +58,217 @@ far — Camera frustum far plane.
 用张图直观地表示。
 
 ![img](../images/three3D/three_camera.png)
+![img](../images/three3D/three_camera_detail.png)
+
+## 全景虚拟漫游分析
+
+人的眼睛其实就相当于相机。那么做虚拟漫游重点就在于如何构造720度无死角的场景，而相机处于正中间，也就是坐标系原点（未必，但这样更方便）。由于人在不同的方向看到的最远距离是一样，所以理论上全景相对于人眼来说，是一个球形。但是如果将场景映射到球形上，似乎有些复杂。这里我们把全景抽象出一个立方体，对我们来说有上下左右前后六个面。原理分析清楚了，关键的问题就是如下几个了：
+
+- 如何把六张图片拼接成一个立方体
+- 渲染器如何将立方体的效果处理得逼真
+- 如何表示和实现相机角度的移动
+
+首先我们要清楚，ThreeJS使用的坐标系是右手坐标系， x轴向右，y轴向上，z轴向前。创建相机或者物体时的默认位置是坐标系的原点。所以想要把六张图拼接成一个立方体，只要进行一些平移旋转变化就行了。主要注意的是，图片的朝向要一致向原点，这样相机才能都看得到。
+
+![img](../images/three3D/three_right-handed.jpg)
+
+至于渲染器如何把立方体变成全景漫游的效果，ThreeJS作者新定义了一个渲染器叫CSS3DRenderer封装渲染的过程。我大概看了一点，没太看懂，感觉大致是用CSS3的translate3d，scale属性将图片进行变形，以达到迷惑人眼的效果。
+
+搜了一些资料，因为一直有点不明白为什么cubemap可以实现全景图的效果，原来是因为实现了球面到立方体的映射。如下图，
+
+![img](../images/three3D/three_cubemap_1.jpg)
+
+至于这样的图片是怎么做出来，就涉及到图像处理以及算法的问题了，暂时不在本文的考虑范围内。下图是一张完整的cubemap图。
+
+![img](../images/three3D/three_cubemap_2.png)
+
+最后一个问题相机角度的移动，明确地说是相机聚焦点的移动。此时，我们可以把720度的场景抽象出一个球。由于相机的焦距是确定的，只要确定相机的角度也就确定了相机的聚焦点。只要确定经度纬度即可确定角度，然后通过一些数学计算算出最后的聚焦点位置。而场景的运动是由相机视角的变动而相对运动起来的。所以当鼠标在横向移动时，经度跟着移动；而在鼠标纵向移动时，纬度进行变化。直角坐标与球坐标的转化关系为：
+
+```
+x = r*sin( theta  ) *cos( phi);
+z = r*cos( theta );
+y = r*sin( theta ) * sin( phi );
+```
+
+![img](,,/images/three3D/three_position.png)
+
+## 全景虚拟漫游实现
+
+结合上述的分析，以下代码是官网的代码，加上了注释。
+
+```
+<script src="js/three.js"></script>
+<script src="js/renderers/CSS3DRenderer.js"></script>
+
+<script>
+//定义相机，场景，渲染器，是3D场景形成的三大要素
+var camera, scene, renderer;
+//定义几何体，材质，以及几何体加材质之后形成的网格
+var geometry, material, mesh;
+//生成三维向量（0,0,0），相机的目标点
+var target = new THREE.Vector3();
+//lon 经度 竖着的 有东经 西经 ；lat 维度 横着的 有南纬 北纬
+//该经纬表示相机的聚焦点，初始状态在前面
+var lon = 90, lat = 0;
+//同样是相机的聚焦点，上面是角度，此处转化为弧度制
+var phi = 0, theta = 0;
+//移动端用户输入的x，y
+var touchX, touchY;
+
+init();
+animate();
+
+function init() {
+    //相机的默认位置在坐标系的原点
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
+
+    scene = new THREE.Scene();
+    //右手坐标系，z朝向观察者，即相机。下面是将六个面拼接成立方体，分别对应
+    var sides = [
+        {
+            url: 'res/Bridge2/posx.jpg', //左侧
+            position: [ -512, 0, 0 ],
+            rotation: [ 0, Math.PI / 2, 0 ]
+        },
+        {
+            url: 'res/Bridge2/negx.jpg', //右侧
+            position: [ 512, 0, 0 ],
+            rotation: [ 0, -Math.PI / 2, 0 ]
+        },
+        {
+            url: 'res/Bridge2/posy.jpg', //上侧
+            position: [ 0,  512, 0 ],
+            rotation: [ Math.PI / 2, 0, Math.PI  ]
+        },
+        {
+            url: 'res/Bridge2/negy.jpg', //下侧
+            position: [ 0, -512, 0 ],
+            rotation: [ -Math.PI / 2, 0, Math.PI ]
+        },
+        {
+            url: 'res/Bridge2/posz.jpg', //前
+            position: [ 0, 0,  512 ],
+            rotation: [ 0, Math.PI, 0 ]
+        },
+        {
+            url: 'res/Bridge2/negz.jpg', //后
+            position: [ 0, 0, -512 ],
+            rotation: [ 0, 0, 0 ]
+        }
+    ];
+   //将六个图片添加到场景中
+    for ( var i = 0; i < sides.length; i ++ ) {
+
+        var side = sides[ i ];
+
+        var element = document.createElement( 'img' );
+        element.width = 1026; // 2 pixels extra to close the gap.
+        element.src = side.url;
+        //CSS3DObject 是拓展出去的方法，原型是object3D，见CSS3DRenderer.js
+        var object = new THREE.CSS3DObject( element );
+        object.position.fromArray( side.position );
+        object.rotation.fromArray( side.rotation );
+        scene.add( object );
+
+    }
+    //渲染器也是拓展出来的方法，见CSS3DRenderer.js
+    renderer = new THREE.CSS3DRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+    //添加鼠标，手势，窗口事件
+    document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+    document.addEventListener( 'wheel', onDocumentMouseWheel, false );
+
+    document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+    document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+    window.addEventListener( 'resize', onWindowResize, false );
+
+}
+
+function onWindowResize() {
+    //窗口缩放的时候，保证场景也跟随着一起缩放
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
+function onDocumentMouseDown( event ) {
+    event.preventDefault();
+    //保证监听拖拽事件
+    document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+
+}
+
+function onDocumentMouseMove( event ) {
+    //鼠标的移动距离  currentEvent.movementX = currentEvent.screenX - previousEvent.screenX
+    var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+    var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+
+    lon -= movementX * 0.1;
+    lat += movementY * 0.1;
+
+}
+
+function onDocumentMouseUp( event ) {
+    //保证监听拖拽事件
+    document.removeEventListener( 'mousemove', onDocumentMouseMove );
+    document.removeEventListener( 'mouseup', onDocumentMouseUp );
+
+}
+
+function onDocumentMouseWheel( event ) {
+    //相机的视觉随着鼠标滚动的距离拉进或者远离
+    camera.fov += event.deltaY * 0.05;
+    camera.updateProjectionMatrix();
+
+}
+
+function onDocumentTouchStart( event ) {
+
+    event.preventDefault();
+    //移动端没有movement，所以直接用touchX touchY去计算移动的距离
+    var touch = event.touches[ 0 ];
+
+    touchX = touch.screenX;
+    touchY = touch.screenY;
+
+}
+
+function onDocumentTouchMove( event ) {
+
+    event.preventDefault();
+
+    var touch = event.touches[ 0 ];
+
+    lon -= ( touch.screenX - touchX ) * 0.1;
+    lat += ( touch.screenY - touchY ) * 0.1;
+
+    touchX = touch.screenX;
+    touchY = touch.screenY;
+
+}
+//开启动画
+function animate() {
+
+    requestAnimationFrame( animate );
+
+    lon +=  0.1;
+    lat = Math.max( - 85, Math.min( 85, lat ) );
+    phi = THREE.Math.degToRad( 90 - lat ); //角度转为弧度制
+    theta = THREE.Math.degToRad( lon );
+    //在球坐标系中算出相机的聚焦点的坐标
+    target.x = Math.sin( phi ) * Math.cos( theta );
+    target.y = Math.cos( phi );
+    target.z = Math.sin( phi ) * Math.sin( theta );
+
+    camera.lookAt( target );
+
+    renderer.render( scene, camera );
+
+}
+```
