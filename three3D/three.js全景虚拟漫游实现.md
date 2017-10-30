@@ -56,4 +56,5 @@ far — Camera frustum far plane.
 ```
 
 用张图直观地表示。
-![img](../images/three_camera.png)
+
+![img](../images/three3D/three_camera.png)
