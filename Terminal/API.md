@@ -72,3 +72,67 @@ pm2 restart all
 ```
 pm2 logs
 ```
+
+# nginx
+配置文件目录   /usr/local/etc/nginx/nginx.conf
+
+nginx.conf配置:
+```
+server{
+    listen [你要监听的端口号];
+    server_name [你要监听的域名/IP];
+    index index.html index.htm index.php;
+    root /usr/local/webserver/nginx/html [站点目录];
+    location / {
+        proxy_pass [代理的目标地址];
+
+        add_header Access-Control-Allow-Origin * [允许所有http跨域请求访问];
+     }
+}
+```
+conf文件中有示例的server，可以添加多个server。
+
+启动命令:
+```
+sudo nginx
+```
+
+快速关闭Nginx，可能不保存相关信息，并迅速终止web服务:
+```
+sudo nginx -s stop
+```
+
+平稳关闭Nginx，保存相关信息，有安排的结束web服务:
+```
+sudo nginx -s quit
+```
+
+重新加载配置文件命令:
+```
+sudo nginx -s reload   (当配置文件修改后，可执行此命令)
+```
+
+重新打开日志文件命令:
+```
+sudo nginx -s reopen
+```
+
+为 Nginx 指定一个配置文件，来代替缺省的:
+```
+nginx -c filename   
+```
+
+不运行，而仅仅测试配置文件。nginx 将检查配置文件的语法的正确性，并尝试打开配置文件中所引用到的文件:
+```
+nginx -t
+```
+
+显示 nginx 的版本
+```
+nginx -v
+```
+
+显示 nginx 的版本，编译器版本和配置参数
+```
+nginx -V
+```
