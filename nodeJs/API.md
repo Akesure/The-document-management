@@ -89,4 +89,16 @@ a 结束
 
 需要仔细的规划, 以允许循环模块依赖在应用程序内正常工作.
 
-## 文件 fs
+## 路径 path
+
+①path.basename​：获取文件名，并可去除文件后缀
+
+②path.delimiter​：获取路径分隔符，windows是“；”，Linux是“：”
+
+主要用于分割路径：process.env.PATH.split(path.delimiter)  分割环境变量，“：”为分割符
+
+③path.dirname：获取文件路径中的目录部分
+
+④path.extname​：获取后缀名,或扩展名
+
+⑤path.join是路径拼接作用，函数定义时没有形参，通过arguments获取用户传入的所有参数，因而传入的参数可为任意个​
