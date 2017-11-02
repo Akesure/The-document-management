@@ -29,6 +29,8 @@ brew install nginx
 
 默认情况下，Nginx 会被安装在 /usr/local/nginx。通过设定编译选项，你可以改变这个设定。
 
+而启动服务在 /usr/local/Cellar/nginx/。
+
 #### Windows 安装
 
 为了安装 Nginx / Win32，需先下载它。然后解压之，然后运行即可。下面以 C 盘根目录为例说明下：

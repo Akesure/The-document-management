@@ -74,6 +74,19 @@ pm2 logs
 ```
 
 # nginx
+- 403 Forbidden 时候的权限配置
+sudo chmod -R 777 /Users/xuyang/Desktop/The-document-management
+
+/usr/local/etc/nginx/nginx.conf 里面还要设置 user  root owner;
+
+在此记住三个目录；/usr/local/cellar           /usr/local/etc/nginx           /usr/local/var
+
+          /usr/local/etc/nginx/nginx.conf （配置文件路径）
+
+          /usr/local/var/www （服务器默认路径）
+
+          /usr/local/Cellar/nginx/1.12.0 （安装路径）（我安装的是1.12.0，具体参照自己安装的版本）
+
 配置文件目录   /usr/local/etc/nginx/nginx.conf
 
 ## nginx.conf配置:
