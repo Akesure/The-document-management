@@ -84,4 +84,4 @@ nginx.exe -c conf/nginx.conf
 我们先实现一个小目标：不考虑复杂的配置，仅仅是完成一个 http 反向代理。
 
 nginx.conf 配置文件如下：
-*注：conf / nginx.conf 是 nginx 的默认配置文件。你也可以使用 nginx -c 指定你的配置文件*
+**注：conf / nginx.conf 是 nginx 的默认配置文件。你也可以使用 nginx -c 指定你的配置文件**
