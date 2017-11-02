@@ -79,6 +79,10 @@ sudo chmod -R 777 /Users/xuyang/Desktop/The-document-management
 
 /usr/local/etc/nginx/nginx.conf 里面还要设置 user  root owner;
 
+/usr/local/Cellar/nginx/1.12.0 建立一个文件logs好让日志进行打印;
+
+- nginx 安装之后的目录地址
+
 在此记住三个目录；/usr/local/cellar           /usr/local/etc/nginx           /usr/local/var
 
           /usr/local/etc/nginx/nginx.conf （配置文件路径）
