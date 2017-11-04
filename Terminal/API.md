@@ -81,6 +81,8 @@ sudo chmod -R 777 /Users/xuyang/Desktop/The-document-management
 
 /usr/local/Cellar/nginx/1.12.0 建立一个文件logs好让日志进行打印;
 
+sudo nginx -s stop
+
 - nginx 安装之后的目录地址
 
 在此记住三个目录；/usr/local/cellar           /usr/local/etc/nginx           /usr/local/var
@@ -153,4 +155,19 @@ nginx -v
 显示 nginx 的版本，编译器版本和配置参数
 ```
 nginx -V
+```
+
+# supervisor 后台nodeJs热加载
+安装
+```
+sudo npm install -g supervisor
+```
+
+运行
+```
+//cd 项目目录
+cd /usr/Desktop/xxxx/
+
+//node启动脚本文件
+supervisor app.js
 ```
