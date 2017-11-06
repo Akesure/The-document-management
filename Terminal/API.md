@@ -171,3 +171,85 @@ cd /usr/Desktop/xxxx/
 //node启动脚本文件
 supervisor app.js
 ```
+
+# 部署阿里云
+远程链接
+```
+ssh root@123.57.143.189
+```
+
+ubuntu 的linux管理器
+```
+apt-get update
+```
+
+安装nodeJs
+[https://nodejs.org/en/download/package-manager](https://nodejs.org/en/download/package-manager)
+```
+apt-get install -y curl
+
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+
+apt-get install nodejs
+```
+
+安装mysql
+```
+apt-get install mysql-server
+
+apt-get install mysql-client
+
+apt-get install libmysqlclient-dev
+```
+
+修改mysql配置允许远程链接
+```
+cd /etc/mysql/
+ls
+vi my.cnf
+
+// 修改bind-address
+# bind-address    = 127.0.0.1
+
+// 重新启动mysql
+service mysql restart
+
+// 链接mysql授权
+grant all privileges on DBName.* to admin@localhost identified by 'password' with grant option
+grant all privileges on *.* to "root"@"%" identified by '123456' with grant option
+
+// 刷新一下权限
+flush privileges
+```
+
+mysql数据库可视化工具： Navicat
+
+云服务部署项目
+```
+// 递归创建目录
+mkdir -p /data/work_run
+
+cd /data/work_run
+
+// 安装git
+apt-get install git
+
+// 然后clone项目仓库
+git clone https://github.com/Akesure/xxxxxx
+
+npm install
+
+npm install -g bower
+
+bower install
+
+bower install --allow-root
+```
+
+启动云服务项目并且访问
+```
+npm start
+
+//公网ip:服务port
+123.57.143.189:3000
+```
