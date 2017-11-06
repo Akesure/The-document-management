@@ -207,34 +207,46 @@ apt-get install libmysqlclient-dev
 cd /etc/mysql/
 ls
 vi my.cnf
+```
 
-// 修改bind-address
+修改bind-address
+```
 # bind-address    = 127.0.0.1
+```
 
-// 重新启动mysql
+重新启动mysql
+```
 service mysql restart
+```
 
-// 链接mysql授权
+链接mysql授权
+```
 grant all privileges on DBName.* to admin@localhost identified by 'password' with grant option
 grant all privileges on *.* to "root"@"%" identified by '123456' with grant option
+```
 
-// 刷新一下权限
+刷新一下权限
+```
 flush privileges
 ```
 
 mysql数据库可视化工具： Navicat
 
-云服务部署项目
+**云服务部署项目**
+递归创建目录
 ```
-// 递归创建目录
 mkdir -p /data/work_run
 
 cd /data/work_run
+```
 
-// 安装git
+安装git
+```
 apt-get install git
+```
 
-// 然后clone项目仓库
+然后clone项目仓库
+```
 git clone https://github.com/Akesure/xxxxxx
 
 npm install
@@ -249,7 +261,9 @@ bower install --allow-root
 启动云服务项目并且访问
 ```
 npm start
+```
 
-//公网ip:服务port
+公网ip:服务port
+```
 123.57.143.189:3000
 ```
