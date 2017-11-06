@@ -263,7 +263,7 @@ bower install --allow-root
 npm start
 ```
 
-公网ip:服务port
+浏览器访问,  公网ip:服务port
 ```
 123.57.143.189:3000
 ```
