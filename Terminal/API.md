@@ -6,6 +6,58 @@ FileZilla xshell Workbench
 sudo lsof -i:80
 ```
 
+回到用户主目录~    根目录/
+```
+cd ～
+
+cd ／
+```
+
+移动／重命名
+```
+mv 1.txt 2.txt
+
+mkdir
+mv 2.txt test/
+
+mv 2.txt ../
+```
+
+复制目录或文件
+```
+cp 2.txt test/
+```
+
+列出全部文件
+```
+ls -al
+```
+
+递归创建文件
+```
+mkdir -p /data1/test
+```
+
+递归强行删除目录及子目录
+```
+rm -rf www
+(r = recursive, f = force)
+```
+
+查看文件内容
+```
+cat
+```
+
+创建一个新文件
+```
+touch 1.txt
+```
+
+添加文件内容
+```
+echo aaa > 1.txt
+```
 
 # node
 
