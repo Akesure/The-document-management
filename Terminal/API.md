@@ -510,11 +510,47 @@ upstream crawl {
 
 server {
   listen 80;
-  server_name www.akesure.com;
+  server_name www.qq.com;
 
   //反向代理
   location / {
     proxy_pass http://crawl;
   }
 }
+```
+
+添加配置
+```
+vi /etc/nginx/nginx.conf
+
+cd /etc/nginx/sites-enabled
+ls
+vi default
+//复制粘贴添加反向代理配置
+
+nginx -s reload
+```
+
+重启pm2应用项目进程
+```
+cd /data/work-run
+
+ls
+
+pm2 start www --name crawl
+```
+
+开启两个应用端口
+```
+ls
+
+//拷贝www入口文件
+cp www www2
+
+vi www2
+//修改端口号
+var post = normalizePort(process.env.PORT || '4000');
+
+//再次启动pm2进程
+pm2 start www2 --name crawl2
 ```
