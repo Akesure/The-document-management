@@ -486,3 +486,13 @@ service nginx
 
 { start | stop | status | restart | reload | configtest }
 ```
+
+查看硬盘
+```
+df -h
+```
+
+查看性能
+```
+top
+```
