@@ -411,3 +411,78 @@ npm start
 ```
 123.57.143.189:3000
 ```
+
+## pm2 进程管理器
+**强大的进程管理器，进程异常退出时pm2会尝试重启**
+
+安装pm2
+```
+npm install pm2 -g
+```
+
+启动应用
+```
+pm2 start app.js --name "crawl"
+```
+
+查看所有应用
+```
+pm2 list
+```
+
+查看运行详情
+```
+pm2 show crawl
+```
+
+重启应用
+```
+pm2 restart crawl
+```
+
+停止应用
+```
+pm2 stop crawl
+```
+
+删除应用
+```
+pm2 delete crawl
+```
+
+更新项目应用
+```
+git pull
+```
+
+## nginx 服务器
+**Nginx 是一个高性能的 HTTP 和 反向代理 服务器**
+
+安装nginx
+```
+apt-get install nginx
+```
+
+nginx命令
+- 启动nginx
+```
+nginx -c /etc/nginx/nginx.conf
+```
+
+- 关闭nginx
+```
+nginx -s stop
+```
+
+- 重读配置文件
+```
+nginx -s reload
+kill -HUP nginx
+```
+
+- 常用命令
+```
+service nginx
+
+{ start | stop | status | restart | reload | configtest }
+```
