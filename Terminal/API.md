@@ -191,6 +191,8 @@ PORT=80 nohup node bin/www &
 查看80端口是否被占用:
 ```
 netstat -anp | grep :80
+
+netstat -anto | grep :80
 ```
 
 
@@ -495,4 +497,24 @@ df -h
 查看性能
 ```
 top
+```
+
+配置nginx反向代理和负载均衡
+```
+//集群
+upstream crawl {
+  ip_hash;
+  server 127.0.0.1:3000 weight=10;
+  server 127.0.0.1:4000 weight=1;
+}
+
+server {
+  listen 80;
+  server_name www.akesure.com;
+
+  //反向代理
+  location / {
+    proxy_pass http://crawl;
+  }
+}
 ```
