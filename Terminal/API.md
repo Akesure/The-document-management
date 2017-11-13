@@ -6,6 +6,11 @@ FileZilla xshell Workbench
 sudo lsof -i:80
 ```
 
+查看历史输入的命令
+```
+history
+```
+
 回到用户主目录~    根目录/
 ```
 cd ～
@@ -60,6 +65,11 @@ echo aaa > 1.txt
 ```
 
 # 管理员账户，可以执行所有的任务
+查看用户权限文件
+```
+cat /etc/passwd
+```
+
 切换到用户
 ```
 su root
@@ -91,6 +101,8 @@ a - 所有用户
 = - 设置权限
 
 -R 递归修改指定目录下所有子项的权限
+
+chmod 777 3.txt 给予用户该文件全部权限
 ```
 
 # vi 编辑器
