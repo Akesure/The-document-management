@@ -519,7 +519,7 @@ getOptionArray: function (arr, keys) {
 }
 ```
 
-## s3-11 排除对象数组某些项 
+## 3-11 排除对象数组某些项 
 ```
 //var arr=[{a:1,b:2,c:9},{a:2,b:3,c:5},{a:5,b:9},{a:4,b:2,c:5},{a:4,b:5,c:7}]
 //ecDo.filterOptionArray(arr,'a')
